@@ -1,6 +1,6 @@
 # face-livness-web
 
-![Пример GIF](https://ссылка_на_ваш_файл_в_gif_формате.gif)
+![Пример GIF](https://github.com/Fanfar1c/face-liveness-web/blob/main/src/test.gif?raw=true)
 
 Проверка фото на живость
 
