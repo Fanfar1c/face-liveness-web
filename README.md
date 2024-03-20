@@ -53,4 +53,4 @@ npx http-server
 
 ### Модель определение лица и определение liveness вшиты в файл Emscrippeng_test.data
 
-### Есть вопросы пешите  [Телеграм](https://t.me/dastan4row/)
+### Есть вопросы пишите  [Telegram](https://t.me/dastan4row/)
