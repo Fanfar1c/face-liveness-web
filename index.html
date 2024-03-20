@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebCam Photo Upload</title>
+    <p></p>
+    <script src="Emscrippeng_test.js"></script>
+</head>
+
+<body>
+
+    <video id="webcam" width="640" height="480" autoplay></video>
+    <button onclick="captureAndSendSnapshot()"> Начать проверку</button>
+
+    <script>
+        let stream;
+
+        const drawingUtils = window;
+
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then((mediaStream) => {
+                stream = mediaStream;
+                const webcam = document.getElementById('webcam');
+                webcam.srcObject = mediaStream;
+            })
+            .catch((error) => {
+                console.error('Error accessing webcam:', error);
+            });
+
+
+        function captureAndSendSnapshot() {
+            if (stream) {
+                console.log('WebSocket connection opened:', event);
+
+                const canvas = document.createElement('canvas');
+                const webcam = document.getElementById('webcam');
+                canvas.width = webcam.width;
+                canvas.height = webcam.height;
+
+
+
+
+                const context = canvas.getContext('2d');
+                context.drawImage(webcam, 0, 0, canvas.width, canvas.height);
+
+
+
+                // Получаем данные из холста в формате base64
+                const imageData = canvas.toDataURL('image/jpeg', 0.4);
+
+
+
+                const utf8Encoder = new TextEncoder('utf-8');
+                const encodedData = utf8Encoder.encode(imageData);
+
+                // Allocate memory
+                const dst = _malloc(encodedData.length + 1); // +1 for null terminator
+
+                // Copy data to the memory
+                HEAPU8.set(encodedData, dst);
+
+                // Null-terminate the string in memory
+                HEAPU8[dst + encodedData.length] = 0;
+
+                // Assuming _nentendo is a function for further processing
+                const result = _nentendo(dst);
+
+                // Free the allocated memory
+                _free(dst);
+
+
+                // Отправляем данные на сервер
+
+
+                if (result > 0.90) {
+                    var paragraph = document.querySelector('p');
+                    paragraph.textContent = 'Реальный фото - ' + 'Confident: ' + result;
+                    paragraph.style.color = "green"
+                } else {
+                    var paragraph = document.querySelector('p');
+                    paragraph.textContent = 'Фейковый фото - ' + 'Confident: ' + result;
+                    paragraph.style.color = "red"
+                }
+
+
+ 
+                setInterval(captureAndSendSnapshot, 0);
+            }
+        }
+
+        
+    </script>
+
+</body>
+
+</html>
